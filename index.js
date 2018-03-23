@@ -40,8 +40,10 @@ const streamer = stream => {
 
 const server = http.createServer((req, res) => {
   if (req.headers && req.headers['user-agent'] && !req.headers['user-agent'].includes('curl')) {
-    res.writeHead(302, {'Location': 'https://github.com/hugomd/parrot.live'});
-    return res.end();
+    //res.writeHead(302, {'Location': 'https://github.com/hugomd/parrot.live'});
+    //return res.end();
+    res.setHeader('content-type', 'text/html');
+    return res.end("Curl this site from a terminal to join the party!<br/><br/>Sources available at: <a href=\"https://github.com/hugomd/parrot.live\">github.com/hugomd/parrot.live</a>");
   }
   const stream = new Readable();
   stream._read = function noop () {};
@@ -55,7 +57,7 @@ const server = http.createServer((req, res) => {
 });
 
 
-const port = process.env.PARROT_PORT || 3000;
+const port = process.env.PARROT_PORT || 8080;
 server.listen(port, err => {
   if (err) throw err;
   console.log(`Listening on locahost:${port}`);
